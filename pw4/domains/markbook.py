@@ -6,7 +6,6 @@ MAX_MARK = 20.0
 
 
 class MarkBook:
-    """Holds students, courses and marks, and does all the maths."""
 
     def __init__(self):
         self.students = []
@@ -35,8 +34,6 @@ class MarkBook:
     # ---- marks (math.floor) -----------------------------------------
     @staticmethod
     def floor_mark(mark):
-        """Round DOWN to 1 decimal digit, e.g. 15.79 -> 15.7.
-        round(..., 9) removes float noise such as 8.2*10 = 81.99999999."""
         return math.floor(round(mark * 10, 9)) / 10
 
     def set_mark(self, course_id, student_id, raw_mark):
@@ -51,7 +48,6 @@ class MarkBook:
 
     # ---- GPA (numpy) -------------------------------------------------
     def gpa(self, student):
-        """Weighted average: sum(mark * credits) / sum(credits)."""
         scores, credits = [], []
         for course in self.courses:
             mark = self.get_mark(course.id, student.id)
@@ -65,7 +61,6 @@ class MarkBook:
         return float(np.sum(scores * credits) / np.sum(credits))
 
     def sort_by_gpa(self):
-        """Sort the student list by GPA, highest first."""
         gpas = np.array([self.gpa(s) for s in self.students], dtype=float)
         order = np.argsort(-gpas, kind="stable")
         self.students = [self.students[i] for i in order]

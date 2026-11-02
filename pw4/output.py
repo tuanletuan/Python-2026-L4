@@ -1,4 +1,3 @@
-"""Module for all curses OUTPUT (drawing, messages, tables)."""
 import curses
 
 ENTER_KEYS = (10, 13, curses.KEY_ENTER)
@@ -6,22 +5,20 @@ QUIT_KEYS = (ord("q"), 27)
 
 
 def init_ui():
-    """Call once after curses has started."""
     try:
         curses.curs_set(0)
     except curses.error:
         pass
     curses.start_color()
     curses.use_default_colors()
-    curses.init_pair(1, curses.COLOR_CYAN, -1)                  # labels / title
-    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_CYAN)  # highlight
-    curses.init_pair(3, curses.COLOR_RED, -1)                   # errors
-    curses.init_pair(4, curses.COLOR_GREEN, -1)                 # success
-    curses.init_pair(5, curses.COLOR_YELLOW, -1)                # table header
+    curses.init_pair(1, curses.COLOR_CYAN, -1)                
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_CYAN)  
+    curses.init_pair(3, curses.COLOR_RED, -1)                   
+    curses.init_pair(4, curses.COLOR_GREEN, -1)                 
+    curses.init_pair(5, curses.COLOR_YELLOW, -1)                
 
 
 def safe_addstr(scr, y, x, text, attr=0):
-    """addstr that never crashes when text goes outside the window."""
     h, w = scr.getmaxyx()
     if y < 0 or y >= h or x >= w - 1:
         return
@@ -46,7 +43,7 @@ def footer(scr, text):
 
 
 def notify(scr, text, kind="ok"):
-    """Show a message on the bottom lines and wait for a key."""
+   
     h, _ = scr.getmaxyx()
     color = curses.color_pair(4 if kind == "ok" else 3) | curses.A_BOLD
     scr.move(h - 2, 0)
@@ -57,7 +54,7 @@ def notify(scr, text, kind="ok"):
     scr.getch()
 
 
-# ---- generic scrollable table -----------------------------------------
+
 def show_table(scr, title, header, rows):
     offset = 0
     while True:
@@ -85,7 +82,7 @@ def show_table(scr, title, header, rows):
             offset = max(0, offset - page)
 
 
-# ---- specific views ---------------------------------------------------
+
 def show_students(scr, book):
     if not book.students:
         notify(scr, "No students have been added yet.", "error")
@@ -127,7 +124,6 @@ def show_student_gpa(scr, book, student):
 
 
 def show_ranking(scr, book):
-    """Expects book.students to be already sorted by GPA."""
     if not book.students:
         notify(scr, "No students have been added yet.", "error")
         return

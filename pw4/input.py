@@ -133,8 +133,6 @@ def input_courses(scr, book):
 
 
 def input_marks(scr, book):
-    """Enter marks for every student in a chosen course.
-    Returns the course (so the caller can display it) or None."""
     if not book.students or not book.courses:
         output.notify(scr, "Add students and courses before entering marks.", "error")
         return None

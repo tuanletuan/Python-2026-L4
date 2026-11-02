@@ -2,12 +2,12 @@
 import os
 from curses import wrapper
 
-import input as inp          # our own module (not the built-in input())
+import input as inp          
 import output as out
 from domains import MarkBook
 
 
-# ---- menu actions (each takes the screen and the MarkBook) -----------
+
 def do_input_students(scr, book):
     inp.input_students(scr, book)
 
@@ -72,6 +72,6 @@ def main(scr):
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("ESCDELAY", "25")  # make ESC respond instantly
+    os.environ.setdefault("ESCDELAY", "25")  
     wrapper(main)
-    print("Exiting program. Don't forget to push your work to your GitHub repository!")
+    print("Exiting program.")
